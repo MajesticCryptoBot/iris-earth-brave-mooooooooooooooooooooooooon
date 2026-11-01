@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "WIRE",
+      "hasCanvas": false,
+      "bodyTextLen": 879,
+      "bodyTextHash": "6148cada6d83ec619a2db7b901502706c42234680623f8eaa9287b32ae078ff3",
+      "bodyTextPrefix": "All Unread 3 Personal 1 Groups 1 Channels 1 B BotFather 10:45 I ",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "WIRE",
+      "hasCanvas": false,
+      "bodyTextLen": 818,
+      "bodyTextHash": "13fe1221153b5de6f9d84fb2638acefd89dd5efd84db2bcbf97b8df809f1c9cd",
+      "bodyTextPrefix": "All Unread 3 Personal 1 Groups 1 Channels 1 B BotFather 10:45 I ",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-preview.json"
+}

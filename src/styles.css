@@ -1,0 +1,167 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+  --color-app: #ffffff;
+  --color-sidebar: #ffffff;
+  --color-hover: #f4f4f5;
+  --color-selected: #3390ec;
+  --color-selected-fg: #ffffff;
+  --color-chat: #d5e4ef;
+  --color-header: #ffffff;
+  --color-bubble-in: #ffffff;
+  --color-bubble-out: #eeffde;
+  --color-bubble-in-fg: #222222;
+  --color-bubble-out-fg: #222222;
+  --color-fg: #222222;
+  --color-muted: #707579;
+  --color-muted-out: #5d8a55;
+  --color-accent: #3390ec;
+  --color-online: #0ac630;
+  --color-badge: #3390ec;
+  --color-badge-muted: #c4c9cc;
+  --color-line: #e6e6e6;
+  --color-chip: #5d7e96;
+  --color-chip-fg: #ffffff;
+  --color-input: #f0f2f5;
+  --color-danger: #e53935;
+  --color-compose: #ffffff;
+  --color-overlay: rgb(0 0 0 / 0.4);
+  --color-dot: rgb(70 100 120 / 0.16);
+  --color-shadow: rgb(16 32 48 / 0.12);
+  --color-check: #4fae4e;
+  --color-ava-red: #e17076;
+  --color-ava-orange: #eea66a;
+  --color-ava-green: #7bc862;
+  --color-ava-teal: #6ec9cb;
+  --color-ava-blue: #65aadd;
+  --color-ava-violet: #a695e7;
+  --color-ava-pink: #ee7aae;
+  --color-ava-saved: #3390ec;
+  --width-sidebar: 26.25rem;
+  --width-info: 22.5rem;
+  --radius-bubble: 0.85rem;
+}
+
+[data-theme="night"] {
+  --color-app: #17212b;
+  --color-sidebar: #17212b;
+  --color-hover: #202b36;
+  --color-selected: #2b5278;
+  --color-selected-fg: #ffffff;
+  --color-chat: #0e1621;
+  --color-header: #17212b;
+  --color-bubble-in: #182533;
+  --color-bubble-out: #2b5278;
+  --color-bubble-in-fg: #f5f5f5;
+  --color-bubble-out-fg: #ffffff;
+  --color-fg: #f5f5f5;
+  --color-muted: #7d8b99;
+  --color-muted-out: #8cb8e8;
+  --color-accent: #6ab2f2;
+  --color-online: #0ac630;
+  --color-badge: #3e88c7;
+  --color-badge-muted: #3e5468;
+  --color-line: #101921;
+  --color-chip: #1d3348;
+  --color-chip-fg: #ffffff;
+  --color-input: #242f3d;
+  --color-danger: #e5534b;
+  --color-compose: #17212b;
+  --color-overlay: rgb(0 0 0 / 0.55);
+  --color-dot: rgb(255 255 255 / 0.035);
+  --color-shadow: rgb(0 0 0 / 0.28);
+  --color-check: #6ab2f2;
+  color-scheme: dark;
+}
+
+[data-theme="day"] {
+  color-scheme: light;
+}
+
+@layer base {
+  html,
+  body {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    background: var(--color-sidebar);
+    color: var(--color-fg);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: default;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-selected-fg);
+  }
+}
+
+.chat-wallpaper {
+  background-color: var(--color-chat);
+  background-image: radial-gradient(var(--color-dot) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+.presence {
+  box-shadow: 0 0 0 2px var(--color-sidebar);
+}
+
+[data-active="true"] .presence {
+  box-shadow: 0 0 0 2px var(--color-selected);
+}
+
+.bubble {
+  position: relative;
+  max-width: min(30rem, 86%);
+  border-radius: var(--radius-bubble);
+  box-shadow: 0 1px 0.5px var(--color-shadow);
+}
+
+.bubble.tail-in {
+  border-bottom-left-radius: 0.25rem;
+}
+
+.bubble.tail-out {
+  border-bottom-right-radius: 0.25rem;
+}
+
+.elevated {
+  box-shadow: 0 0.35rem 1.4rem var(--color-shadow);
+}
+
+.voice-on span {
+  transform-origin: center bottom;
+  animation: voice-bar 0.7s ease-in-out infinite alternate;
+}
+
+@keyframes voice-bar {
+  from {
+    transform: scaleY(0.45);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .voice-on span {
+    animation: none;
+  }
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--color-muted) 45%, transparent) transparent;
+}

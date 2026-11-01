@@ -1,0 +1,41 @@
+{
+  "url": "http://127.0.0.1:8081/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "WIRE",
+      "hasCanvas": false,
+      "bodyTextLen": 525,
+      "bodyTextHash": "1a46568963fed7c5979d4424d44d9af1b38376e28c24cb7e23c8490719183215",
+      "bodyTextPrefix": "All Unread 3 Personal 1 Groups 1 Channels 1 D Desk 09:52 Lena: G",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-built.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "WIRE",
+      "hasCanvas": false,
+      "bodyTextLen": 487,
+      "bodyTextHash": "c4dce8478ff54b1950e366dadc5d8591fa56f2ed5904e03605c952500febbacf",
+      "bodyTextPrefix": "All Unread 3 Personal 1 Groups 1 Channels 1 D Desk 09:52 Lena: G",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-built-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-built.json",
+  "divergesFromBaseline": true,
+  "baselineReasons": [
+    "desktop: body text replaced (similar length, page start changed)",
+    "mobile: body text replaced (similar length, page start changed)"
+  ]
+}

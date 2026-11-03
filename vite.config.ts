@@ -150,11 +150,26 @@ export default defineConfig(({ command, isPreview }) => ({
     host: "0.0.0.0",
     port: 8080,
     strictPort: true,
+    watch: { ignored: ["**/.wire/**"] },
+    proxy: {
+      "/wire-api": {
+        target: "http://127.0.0.1:8787",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/wire-api/, "") || "/",
+      },
+    },
   },
   preview: {
     host: "127.0.0.1",
     port: 8081,
     strictPort: true,
+    proxy: {
+      "/wire-api": {
+        target: "http://127.0.0.1:8787",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/wire-api/, "") || "/",
+      },
+    },
   },
   resolve: { tsconfigPaths: true },
   plugins: [

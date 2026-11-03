@@ -11,6 +11,9 @@ export default defineConfig({
   base: "/",
   publicDir: false,
   resolve: { alias: { "@": resolve(root, "src") } },
+  define: {
+    "import.meta.env.VITE_BOT_API": JSON.stringify("http://127.0.0.1:8787"),
+  },
   build: {
     outDir: "/tmp/wire-www",
     emptyOutDir: true,

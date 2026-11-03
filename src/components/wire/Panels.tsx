@@ -18,6 +18,7 @@ import {
 import { useEffect, useState, type ReactNode } from "react";
 import { Avatar, Switch, WireMark } from "@/components/wire/ui";
 import { subtitle } from "@/lib/wire/format";
+import { OWNER_CHAT_ID, SCRIPT_BASE } from "@/lib/wire/link";
 import { useWire } from "@/lib/wire/store";
 import type { Chat } from "@/lib/wire/types";
 import { cn } from "@/lib/utils";
@@ -444,6 +445,9 @@ export function InfoPanel({ chat, onClose }: { chat: Chat; onClose: () => void }
             >
               Copy token
             </button>
+            <p className="mt-3 text-xs text-muted">Script base</p>
+            <p className="break-all text-xs">{SCRIPT_BASE}/bot{bot.token}/</p>
+            <p className="mt-2 text-xs text-muted">Chat id {OWNER_CHAT_ID}</p>
             {bot.commands.length > 0 ? (
               <ul className="mt-3 space-y-1 text-xs text-muted">
                 {bot.commands.map((command) => (

@@ -2,7 +2,6 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { letterOf } from "@/lib/wire/format";
 import {
-  botAnswer,
   botfatherChat,
   botfatherHello,
   interpretFather,
@@ -95,6 +94,16 @@ type Store = {
   updateBot: (id: string, patch: Partial<Pick<Bot, "description" | "about" | "commands" | "name">>) => void;
   revokeBotToken: (id: string) => string | null;
   deleteBot: (id: string) => void;
+  applyScriptEvent: (
+    token: string,
+    event: {
+      kind: "message" | "edit" | "commands";
+      seq: number;
+      message_id?: number;
+      text?: string;
+      commands?: { command: string; description: string }[];
+    },
+  ) => boolean;
 };
 
 const seed = createSeed();
@@ -378,7 +387,7 @@ export const useWire = create<Store>()(
         }
         const bot = get().bots.find((item) => item.chatId === chatId);
         if (bot) {
-          scheduleLocal(chatId, bot.id, botAnswer(bot, body));
+          void import("@/lib/wire/link").then((mod) => mod.pushIncoming(bot.token, body));
           return;
         }
         if (chat.kind === "private" || chat.kind === "group") {
@@ -759,6 +768,48 @@ export const useWire = create<Store>()(
           messages,
           foregroundId: get().foregroundId === bot.chatId ? null : get().foregroundId,
         });
+      },
+      applyScriptEvent: (token, event) => {
+        const bot = get().bots.find((item) => item.token === token);
+        if (!bot) return false;
+        if (event.kind === "commands" && event.commands) {
+          get().updateBot(bot.id, { commands: event.commands });
+          return true;
+        }
+        const messageId = event.message_id || event.seq;
+        const id = `api_${messageId}`;
+        const list = get().messages[bot.chatId] ?? [];
+        if (event.kind === "edit" && list.some((item) => item.id === id)) {
+          set({
+            messages: {
+              ...get().messages,
+              [bot.chatId]: list.map((item) =>
+                item.id === id ? { ...item, text: event.text || item.text, editedAt: Date.now() } : item,
+              ),
+            },
+          });
+          return true;
+        }
+        if (!event.text) return false;
+        if (list.some((item) => item.id === id)) return true;
+        const reply: Message = {
+          id,
+          senderId: bot.id,
+          text: event.text,
+          createdAt: Date.now(),
+          reactions: [],
+          status: "read",
+          apiId: messageId,
+        };
+        const looking = get().foregroundId === bot.chatId;
+        set({
+          messages: { ...get().messages, [bot.chatId]: [...list, reply] },
+          chats: patchChat(get().chats, bot.chatId, (chat) => ({
+            ...chat,
+            unread: looking ? chat.unread : chat.unread + 1,
+          })),
+        });
+        return true;
       },
     }),
     {

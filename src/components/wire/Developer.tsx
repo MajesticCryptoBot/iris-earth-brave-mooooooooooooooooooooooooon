@@ -1,6 +1,7 @@
 import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
 import { Avatar } from "@/components/wire/ui";
+import { OWNER_CHAT_ID, SCRIPT_BASE, syncBots } from "@/lib/wire/link";
 import { useWire } from "@/lib/wire/store";
 import type { ApiPlatform, Bot, BotCommand } from "@/lib/wire/types";
 import { cn } from "@/lib/utils";
@@ -282,6 +283,7 @@ function BotEditor({ bot, onOpen }: { bot: Bot; onOpen: (chatId: string) => void
             commands: commands.filter((command) => command.command && command.description),
           });
           notify("Bot settings saved");
+          void syncBots({ commands: true });
         }}
         className="h-10 w-full rounded-xl bg-accent text-sm font-medium text-selected-fg"
       >
@@ -318,8 +320,15 @@ export function BotsPanel({ onBack, onOpen }: { onBack: () => void; onOpen: (cha
       <PanelHead title="Bots" onBack={onBack} />
       <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4">
         <p className="mb-4 text-sm leading-5 text-muted">
-          Same jobs as BotFather: a token, a description, an about line, and commands. The BotFather chat in the list does it in conversation too.
+          Create a bot, copy the token into your script, and point the script at {SCRIPT_BASE} instead of api.telegram.org. Commands you send here reach the script. What the script sends back shows in that bot's chat.
         </p>
+        <div className="mb-4 rounded-xl bg-input px-3 py-3 text-xs leading-5">
+          <p className="text-sm font-medium">Script connection</p>
+          <p className="mt-1 text-muted">Chat id for this account</p>
+          <p className="text-sm">{OWNER_CHAT_ID}</p>
+          <p className="mt-2 text-muted">Replace the host only. Keep /bot and the token.</p>
+          <p className="break-all text-sm">{`${SCRIPT_BASE}/bot<token>/`}</p>
+        </div>
         <label className="mb-3 block text-sm">
           <span className="mb-1 block text-xs text-accent">Name</span>
           <input

@@ -2,6 +2,7 @@ const { app, BrowserWindow, Menu, shell } = require("electron");
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
+const { startBotApi } = require("./bot-api.cjs");
 
 app.setName("WIRE");
 app.setAppUserModelId("com.wire.desk");
@@ -99,7 +100,10 @@ app.on("second-instance", () => {
   win.focus();
 });
 
-app.whenReady().then(createWindow).catch((err) => {
+app.whenReady().then(() => {
+  startBotApi({ dataFile: path.join(app.getPath("userData"), "bot-api.json") });
+  return createWindow();
+}).catch((err) => {
   console.error(err);
   app.quit();
 });

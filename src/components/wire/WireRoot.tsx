@@ -18,6 +18,7 @@ import {
 import { Sidebar } from "@/components/wire/Sidebar";
 import { WireMark } from "@/components/wire/ui";
 import { useWire } from "@/lib/wire/store";
+import { tick } from "@/lib/wire/link";
 import type { FolderId, Message } from "@/lib/wire/types";
 
 type Panel = null | "menu" | "settings" | "contacts" | "newchat" | "newgroup" | "newchannel" | "bots" | "api";
@@ -78,6 +79,13 @@ export function WireRoot() {
       live = false;
     };
   }, []);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    void tick();
+    const timer = window.setInterval(() => void tick(), 1000);
+    return () => window.clearInterval(timer);
+  }, [hydrated]);
 
   useEffect(() => {
     setForeground(activeId);

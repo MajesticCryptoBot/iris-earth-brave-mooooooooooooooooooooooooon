@@ -40,6 +40,7 @@ export type Message = {
   pinned?: boolean;
   status?: "sent" | "read";
   sample?: boolean;
+  apiId?: number;
 };
 
 export type Chat = {
